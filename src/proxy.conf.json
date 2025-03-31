@@ -1,0 +1,11 @@
+{
+  "/carAPI": {
+    "target": "https://carapi.app/api",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/carAPI": ""
+    }
+  }
+}
