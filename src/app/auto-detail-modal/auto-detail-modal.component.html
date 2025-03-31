@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Fahrzeug Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">Schließen</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="selectedAuto">
+    <h3>{{ selectedAuto.make_model_trim.name }} - {{ selectedAuto.make_model_trim.year }}</h3>
+    <p><strong>Engine Type:</strong> {{ selectedAuto.engine_type }}</p>
+    <p><strong>Fuel Type:</strong> {{ selectedAuto.fuel_type }}</p>
+    <p><strong>Horsepower:</strong> {{ selectedAuto.horsepower_hp }} HP</p>
+    <p><strong>Torque:</strong> {{ selectedAuto.torque_ft_lbs }} ft-lbs</p>
+    <p><strong>Transmission:</strong> {{ selectedAuto.transmission }}</p>
+
+    <h4>Trims:</h4>
+    <ul>
+      <li *ngFor="let trim of selectedAuto.trims">
+        {{ trim.name }} - MSRP: {{ trim.msrp}}
+      </li>
+    </ul>
+  </div>
+</ion-content>
