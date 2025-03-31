@@ -10,5 +10,24 @@
       <ion-title size="large">auto</ion-title>
     </ion-toolbar>
   </ion-header>
-  <app-explore-container></app-explore-container>
+  <ion-list *ngIf="autos">
+    <ion-item *ngFor="let auto of autos.data">
+      <ion-label>
+        <h2>{{ auto.name }}</h2>
+        <p>{{ auto.make.name }}</p>
+        <!-- Beispiel für Trim-Anzeige, wenn vorhanden -->
+        <div *ngIf="auto.trims && auto.trims.length > 0">
+          <p>Trims:</p>
+          <ul>
+            <li *ngFor="let trim of auto.trims">
+              {{ trim.name }} - {{ trim.msrp | currency }}
+            </li>
+          </ul>
+        </div>
+        <div *ngIf="auto.trims && auto.trims.length === 0">
+          <p>Keine Trims verfügbar</p>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
