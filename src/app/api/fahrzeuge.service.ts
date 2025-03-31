@@ -3,45 +3,49 @@ import {HttpClient} from "@angular/common/http";
 import {forkJoin, map, Observable} from "rxjs";
 
 export interface Auto {
-  collection: AColl;
-  data: ADatum[];
+  collection: Collection;
+  data: AutoData[];
 }
 
-export interface AColl {
+export interface Collection {
   url: string;
   count: number;
   pages: number;
   total: number;
-  next: string;
-  prev: string;
-  first: string;
-  last: string;
 }
 
-export interface ADatum {
+export interface AutoData {
   id: number;
-  make_id: number;
-  name: string;
-  make: AMake;
-  trims?: ATrim[];
+  make_model_trim_id: number;
+  engine_type: string;
+  fuel_type: string;
+  horsepower_hp: number;
+  torque_ft_lbs: number;
+  transmission: string;
+  make_model_trim: MakeModelTrim;
+  trims: Trim[]; // Die trims für dieses Auto, die durch die Trims API geliefert werden
 }
 
-export interface AMake {
+export interface MakeModelTrim {
   id: number;
   name: string;
+  year: number;
+  make_model: MakeModel;
 }
 
+export interface MakeModel {
+  name: string;
+  make: Make;
+}
 
-export interface ATrim {
-  id: number
-  make_model_id: number
-  year: number
-  name: string
-  description: string
-  msrp: number
-  invoice: number
-  created: string
-  modified: string
+export interface Make {
+  name: string;
+}
+
+export interface Trim {
+  name: string;
+  msrp: number;
+  description: string;
 }
 
 
@@ -61,29 +65,32 @@ export class FahrzeugeService {
     return this.http.get<any>(`/carAPI/trims?year=${year}`);
   }
 
-  getAutosWithAttributes(year: number): Observable<Auto> {
+  getEngine(year:number): Observable<Auto> {
+    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}`);
+  }
+
+  getAutosWithAttributesAndEngine(year: number): Observable<Auto> {
     return forkJoin({
-      models: this.getAutos(year),
-      trims: this.getAttributes(year)
+      trims: this.getAttributes(year),
+      engines: this.getEngine(year)
     }).pipe(
       map(result => {
-        console.log('Models:', result.models.data);
         console.log('Trims:', result.trims.data);
+        console.log('Engines:', result.engines.data);
 
-        const modelsWithTrims = result.models.data.map(model => {
-          const modelTrims = result.trims.data.filter((trim: { make_model_id: number; }) => trim.make_model_id === model.id);
+        const modelsWithTrimsAndEngines = result.engines.data.map(engine => {
 
-          console.log(`Model ID: ${model.id} -> Found Trims:`, modelTrims);
+          const modelTrims = result.trims.data.filter((trim: { make_model_id: number; }) => trim.make_model_id === engine.make_model_trim_id);
 
           return {
-            ...model,
+            ...engine,
             trims: modelTrims
           };
         });
 
         return {
-          ...result.models,
-          data: modelsWithTrims
+          ...result.engines,
+          data: modelsWithTrimsAndEngines
         };
       })
     );

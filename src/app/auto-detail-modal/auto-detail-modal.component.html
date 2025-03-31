@@ -19,7 +19,7 @@
     <h4>Trims:</h4>
     <ul>
       <li *ngFor="let trim of selectedAuto.trims">
-        {{ trim.name }} - MSRP: {{ trim.msrp}}
+        {{ trim.name }} - MSRP: {{ trim.msrp | currency }}
       </li>
     </ul>
   </div>

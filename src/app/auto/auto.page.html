@@ -10,23 +10,16 @@
       <ion-title size="large">auto</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-list *ngIf="autos">
-    <ion-item *ngFor="let auto of autos.data">
-      <ion-label>
-        <p>{{ auto.make.name }}</p>
-        <h2>{{ auto.name }}</h2>
-        <div *ngIf="auto.trims && auto.trims.length > 0">
-          <p>Trims:</p>
-          <ul>
-            <li *ngFor="let trim of auto.trims">
-              {{ trim.name }} - {{ trim.msrp | currency }}
-            </li>
-          </ul>
+  <ion-content *ngIf="autos">
+    <ion-list>
+      <ion-item *ngFor="let auto of autos.data" (click)="openModal(auto)">
+        <div>
+          <h2>{{ auto.make_model_trim.name }} - {{ auto.make_model_trim.year }}</h2>
+          <p>Engine Type: {{ auto.engine_type }}</p>
+          <p>Horsepower: {{ auto.horsepower_hp }} HP</p>
+          <p>Transmission: {{ auto.transmission }}</p>
         </div>
-        <div *ngIf="auto.trims && auto.trims.length === 0">
-          <p>Keine Trims verfügbar</p>
-        </div>
-      </ion-label>
-    </ion-item>
-  </ion-list>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-content>
