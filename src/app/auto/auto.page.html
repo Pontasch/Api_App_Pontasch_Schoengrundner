@@ -13,9 +13,8 @@
   <ion-list *ngIf="autos">
     <ion-item *ngFor="let auto of autos.data">
       <ion-label>
-        <h2>{{ auto.name }}</h2>
         <p>{{ auto.make.name }}</p>
-        <!-- Beispiel für Trim-Anzeige, wenn vorhanden -->
+        <h2>{{ auto.name }}</h2>
         <div *ngIf="auto.trims && auto.trims.length > 0">
           <p>Trims:</p>
           <ul>
