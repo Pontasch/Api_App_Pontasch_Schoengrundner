@@ -11,10 +11,10 @@
     </ion-toolbar>
   </ion-header>
   <ion-content *ngIf="autos">
-    <ion-list>
+    <ion-list *ngIf="autos?.data">
       <ion-item *ngFor="let auto of autos.data" (click)="openModal(auto)">
         <div>
-          <h2>{{ auto.make_model_trim.name }} - {{ auto.make_model_trim.year }}</h2>
+          <h2>{{ auto.make_model_trim.make_model.make.name }} - {{ auto.make_model_trim.make_model.name }}</h2>
           <p>Engine Type: {{ auto.engine_type }}</p>
           <p>Horsepower: {{ auto.horsepower_hp }} HP</p>
           <p>Transmission: {{ auto.transmission }}</p>

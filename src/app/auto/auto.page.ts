@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {IonContent, IonHeader, IonItem, IonList, IonTitle, IonToolbar} from '@ionic/angular/standalone';
-import {Auto, FahrzeugeService} from "../api/fahrzeuge.service";
+import {Auto, AutoData, FahrzeugeService} from "../api/fahrzeuge.service";
 import {ModalController} from "@ionic/angular";
 import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.component";
 
@@ -22,7 +22,7 @@ export class AutoPage  implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fahrzeugeService.getAutosWithAttributesAndEngine(2020).subscribe(
+    this.fahrzeugeService.getAutosWithAttributesAndEngine(2019).subscribe(
       (data) => {
         this.autos = data;
         console.log('Autos:', this.autos);
@@ -33,13 +33,13 @@ export class AutoPage  implements OnInit {
     );
   }
 
-  async openModal(auto: any) {
+  async openModal(auto: AutoData) {
     const modal = await this.modalController.create({
       component: AutoDetailModalComponent,
       componentProps: {
         selectedAuto: auto
       }
     });
-    return await modal.present();
+    return modal.present();
   }
 }

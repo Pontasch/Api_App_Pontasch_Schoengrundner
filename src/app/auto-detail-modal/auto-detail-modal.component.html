@@ -1,26 +1,92 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Fahrzeug Details</ion-title>
+<ion-header class="border-bottom">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <ion-icon name="car-sport" class="ion-margin-end"></ion-icon>
+      Fahrzeugdetails
+    </ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">Schließen</ion-button>
+      <ion-button fill="clear" color="light" (click)="closeModal()">
+        Schließen
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <div *ngIf="selectedAuto">
-    <h3>{{ selectedAuto.make_model_trim.name }} - {{ selectedAuto.make_model_trim.year }}</h3>
-    <p><strong>Engine Type:</strong> {{ selectedAuto.engine_type }}</p>
-    <p><strong>Fuel Type:</strong> {{ selectedAuto.fuel_type }}</p>
-    <p><strong>Horsepower:</strong> {{ selectedAuto.horsepower_hp }} HP</p>
-    <p><strong>Torque:</strong> {{ selectedAuto.torque_ft_lbs }} ft-lbs</p>
-    <p><strong>Transmission:</strong> {{ selectedAuto.transmission }}</p>
 
-    <h4>Trims:</h4>
-    <ul>
-      <li *ngFor="let trim of selectedAuto.trims">
-        {{ trim.name }} - MSRP: {{ trim.msrp | currency }}
-      </li>
-    </ul>
+    <!-- Header -->
+    <div class="ion-margin-bottom">
+      <ion-text color="primary">
+        <h1 class="ion-text-bold">
+          {{ selectedAuto.make_model_trim.name }}
+          <ion-text color="medium">({{ selectedAuto.make_model_trim.year }})</ion-text>
+        </h1>
+      </ion-text>
+    </div>
+
+    <!-- Technische Daten -->
+    <ion-grid>
+      <ion-row>
+        <!-- Spalte 1 -->
+        <ion-col size="12" size-md="6">
+          <ion-list lines="none">
+
+            <ion-item>
+              <ion-label><strong>Motor:</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.engine_type }}</ion-text>
+            </ion-item>
+
+            <ion-item>
+              <ion-label><strong>Kraftstoff:</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.fuel_type }}</ion-text>
+            </ion-item>
+
+            <ion-item>
+              <ion-label><strong>Leistung:</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.horsepower_hp }} HP</ion-text>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+
+        <!-- Spalte 2 -->
+        <ion-col size="12" size-md="6">
+          <ion-list lines="none">
+
+            <ion-item>
+              <ion-label><strong>Drehmoment:</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.torque_ft_lbs }} ft-lbs</ion-text>
+            </ion-item>
+
+            <ion-item>
+              <ion-label><strong>Getriebe:</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.transmission }}</ion-text>
+            </ion-item>
+
+            <ion-item>
+              <ion-label><strong>Hersteller:</strong></ion-label>
+              <ion-text color="medium">
+                {{ selectedAuto.make_model_trim.make_model.make.name }}
+              </ion-text>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Ausstattungsvarianten -->
+    <ion-list *ngIf="selectedAuto.trims?.length" class="ion-margin-top">
+      <ion-list-header>
+        <ion-label>Ausstattungsvarianten</ion-label>
+      </ion-list-header>
+
+      <ion-item *ngFor="let trim of selectedAuto.trims">
+        <ion-label>{{ trim.name }}</ion-label>
+        <ion-badge slot="end" color="secondary">
+          {{ trim.msrp | currency:'EUR':'symbol' }}
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+
   </div>
 </ion-content>
