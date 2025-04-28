@@ -8,8 +8,22 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">auto</ion-title>
+
+
     </ion-toolbar>
+
   </ion-header>
+  <ion-select
+    [(ngModel)]="selectedYear"
+    (ionChange)="loadAutos()"
+    interface="popover"
+    placeholder="Jahr"
+  >
+    <ion-select-option *ngFor="let year of availableYears" [value]="year">
+      {{ year }}
+    </ion-select-option>
+  </ion-select>
+
   <ion-content *ngIf="autos">
     <ion-list *ngIf="autos?.data">
       <ion-item *ngFor="let auto of autos.data" (click)="openModal(auto)">

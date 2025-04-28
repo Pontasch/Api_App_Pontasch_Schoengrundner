@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {IonContent, IonHeader, IonItem, IonList, IonTitle, IonToolbar} from '@ionic/angular/standalone';
 import {Auto, AutoData, FahrzeugeService} from "../api/fahrzeuge.service";
-import {ModalController} from "@ionic/angular";
+import {IonicModule, ModalController} from "@ionic/angular";
 import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.component";
 
 @Component({
@@ -11,10 +10,16 @@ import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.c
   templateUrl: './auto.page.html',
   styleUrls: ['./auto.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonItem,IonList]
+  imports: [ CommonModule, FormsModule, IonicModule]
 })
 export class AutoPage  implements OnInit {
   autos: Auto | undefined;
+
+  selectedYear: number = 2020; // Standardjahr
+  availableYears: number[] = [
+    2020, 2019, 2018, 2017, 2016, 2015
+  ];
+
 
   constructor(
     private fahrzeugeService: FahrzeugeService,
@@ -22,13 +27,15 @@ export class AutoPage  implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fahrzeugeService.getAutosWithAttributesAndEngine(2019).subscribe(
+    this.loadAutos();
+  }
+  loadAutos() {
+    this.fahrzeugeService.getAutosWithAttributesAndEngine(this.selectedYear).subscribe(
       (data) => {
         this.autos = data;
-        console.log('Autos:', this.autos);
       },
       (error) => {
-        console.error('Fehler beim Abrufen der Autos:', error);
+        console.error('Fehler:', error);
       }
     );
   }

@@ -23,7 +23,7 @@ export interface AutoData {
   torque_ft_lbs: number;
   transmission: string;
   make_model_trim: MakeModelTrim;
-  trims: Trim[]; // Die trims für dieses Auto, die durch die Trims API geliefert werden
+  trims: Trim[];
 }
 
 export interface MakeModelTrim {
