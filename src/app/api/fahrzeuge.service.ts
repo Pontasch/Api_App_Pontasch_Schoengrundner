@@ -61,18 +61,18 @@ export class FahrzeugeService {
   getAutos(year: number): Observable<Auto> {
     return this.http.get<Auto>(`/carAPI/models?verbose=yes&year=${year}`);
   }
-    getAttributes(year:number): Observable<any> {
-    return this.http.get<any>(`/carAPI/trims?year=${year}`);
+    getAttributes(year:number, make:string,  model:string): Observable<any> {
+    return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}`);
   }
 
-  getEngine(year:number): Observable<Auto> {
-    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}`);
+  getEngine(year:number, make:string,  model:string): Observable<Auto> {
+    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}&make=${make}&model=${model}`);
   }
 
-  getAutosWithAttributesAndEngine(year: number): Observable<Auto> {
+  getAutosWithAttributesAndEngine(year: number, make:string,  model:string): Observable<Auto> {
     return forkJoin({
-      trims: this.getAttributes(year),
-      engines: this.getEngine(year)
+      trims: this.getAttributes(year, make,  model),
+      engines: this.getEngine(year,make,model)
     }).pipe(
       map(result => {
         console.log('Trims:', result.trims.data);

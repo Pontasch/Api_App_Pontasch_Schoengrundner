@@ -15,7 +15,6 @@
 <ion-content class="ion-padding">
   <div *ngIf="selectedAuto">
 
-    <!-- Header -->
     <div class="ion-margin-bottom">
       <ion-text color="primary">
         <h1 class="ion-text-bold">
@@ -25,10 +24,9 @@
       </ion-text>
     </div>
 
-    <!-- Technische Daten -->
     <ion-grid>
       <ion-row>
-        <!-- Spalte 1 -->
+
         <ion-col size="12" size-md="6">
           <ion-list lines="none">
 
@@ -49,7 +47,6 @@
           </ion-list>
         </ion-col>
 
-        <!-- Spalte 2 -->
         <ion-col size="12" size-md="6">
           <ion-list lines="none">
 
@@ -74,7 +71,6 @@
       </ion-row>
     </ion-grid>
 
-    <!-- Ausstattungsvarianten -->
     <ion-list *ngIf="selectedAuto.trims?.length" class="ion-margin-top">
       <ion-list-header>
         <ion-label>Ausstattungsvarianten</ion-label>

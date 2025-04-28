@@ -13,17 +13,46 @@
     </ion-toolbar>
 
   </ion-header>
-  <ion-select
-    [(ngModel)]="selectedYear"
-    (ionChange)="loadAutos()"
-    interface="popover"
-    placeholder="Jahr"
-  >
-    <ion-select-option *ngFor="let year of availableYears" [value]="year">
-      {{ year }}
-    </ion-select-option>
-  </ion-select>
+  <ion-grid class="search-grid">
+    <ion-row class="ion-align-items-center ion-justify-content-between">
 
+      <ion-col size="12" size-sm="5" size-md="3">
+        <ion-searchbar
+          [(ngModel)]="Marke"
+          placeholder="Marke"
+          (ionInput)="loadAutos()"
+          debounce="0"
+          class="compact-search">
+        </ion-searchbar>
+      </ion-col>
+
+      <ion-col size="12" size-sm="5" size-md="3">
+        <ion-searchbar
+          [(ngModel)]="Model"
+          placeholder="Modell"
+          (ionInput)="loadAutos()"
+          debounce="0"
+          class="compact-search">
+        </ion-searchbar>
+      </ion-col>
+
+      <ion-col size="12" size-sm="12" size-md="4" size-lg="3">
+        <ion-item lines="none" class="compact-item">
+          <ion-select
+            [(ngModel)]="selectedYear"
+            (ionChange)="loadAutos()"
+            interface="popover"
+            placeholder="Jahr auswählen"
+            class="compact-select">
+            <ion-select-option *ngFor="let year of availableYears" [value]="year">
+              {{ year }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
   <ion-content *ngIf="autos">
     <ion-list *ngIf="autos?.data">
       <ion-item *ngFor="let auto of autos.data" (click)="openModal(auto)">

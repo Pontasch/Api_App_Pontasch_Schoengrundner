@@ -14,8 +14,9 @@ import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.c
 })
 export class AutoPage  implements OnInit {
   autos: Auto | undefined;
-
-  selectedYear: number = 2020; // Standardjahr
+  Marke:string="";
+  Model: string="";
+  selectedYear: number = 2020;
   availableYears: number[] = [
     2020, 2019, 2018, 2017, 2016, 2015
   ];
@@ -30,7 +31,7 @@ export class AutoPage  implements OnInit {
     this.loadAutos();
   }
   loadAutos() {
-    this.fahrzeugeService.getAutosWithAttributesAndEngine(this.selectedYear).subscribe(
+    this.fahrzeugeService.getAutosWithAttributesAndEngine(this.selectedYear,this.Marke, this.Model).subscribe(
       (data) => {
         this.autos = data;
       },
@@ -39,6 +40,7 @@ export class AutoPage  implements OnInit {
       }
     );
   }
+
 
   async openModal(auto: AutoData) {
     const modal = await this.modalController.create({
