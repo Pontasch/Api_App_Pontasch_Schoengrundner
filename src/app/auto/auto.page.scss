@@ -1,3 +1,38 @@
 ion-select {
   max-width: 150px;
 }
+
+search-grid {
+  padding: 0;
+  --ion-grid-padding: 0;
+  --ion-grid-column-padding: 5px;
+}
+
+.compact-search {
+  --background: var(--ion-color-light);
+  --border-radius: 8px;
+  --box-shadow: none;
+  padding: 0;
+
+  .searchbar-input-container {
+    height: 40px;
+  }
+}
+
+.compact-item {
+  --inner-padding-end: 0;
+  --padding-start: 0;
+  --min-height: 40px;
+}
+
+.compact-select {
+  width: 100%;
+  --padding-start: 12px;
+  --padding-end: 12px;
+}
+
+@media (max-width: 768px) {
+  ion-col {
+    padding-bottom: 8px;
+  }
+}
