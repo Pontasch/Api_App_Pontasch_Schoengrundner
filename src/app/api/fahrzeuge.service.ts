@@ -47,8 +47,51 @@ export interface Trim {
   msrp: number;
   description: string;
 }
+export type Motorräder= Motorrad[]
 
-
+export interface Motorrad{
+  make: string
+  model: string
+  year: string
+  type: string
+  displacement: string
+  engine: string
+  compression: string
+  bore_stroke: string
+  valves_per_cylinder: any
+  fuel_system: string
+  fuel_control?: string
+  lubrication?: string
+  cooling: string
+  gearbox: string
+  transmission: string
+  clutch?: string
+  frame: any
+  front_suspension: string
+  front_wheel_travel?: string
+  rear_suspension?: string
+  rear_wheel_travel?: string
+  front_tire: string
+  rear_tire: string
+  front_brakes: string
+  rear_brakes: string
+  seat_height: string
+  ground_clearance: string
+  wheelbase: string
+  fuel_capacity: string
+  starter: string
+  power?: string
+  torque: string
+  top_speed?: string
+  fuel_consumption: string
+  emission: string
+  total_weight: string
+  total_height: any
+  total_length: string
+  total_width: any
+  ignition: any
+  dry_weight: string
+}
 
 @Injectable({
   providedIn: 'root'
