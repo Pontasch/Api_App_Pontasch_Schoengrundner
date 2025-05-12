@@ -20,6 +20,7 @@ export class MotorradPage implements OnInit {
   availableYears: number[] = [
     2020, 2019, 2018, 2017, 2016, 2015
   ];
+  private modalController: any;
 
   constructor(
     private fahrzeugeService: FahrzeugeService
@@ -39,5 +40,14 @@ export class MotorradPage implements OnInit {
         console.error('Fehler:', error);
       }
     );
+  }
+  async openModal(motorraeder: Motorraeder) {
+    const modal = await this.modalController.create({
+      component: MotorradPage,
+      componentProps: {
+        selectedMotorrad: motorraeder
+      }
+    });
+    return modal.present();
   }
 }
