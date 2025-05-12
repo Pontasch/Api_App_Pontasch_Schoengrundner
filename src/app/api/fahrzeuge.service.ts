@@ -47,7 +47,7 @@ export interface Trim {
   msrp: number;
   description: string;
 }
-export type Motorräder= Motorrad[]
+export type Motorraeder= Motorrad[]
 
 export interface Motorrad{
   make: string
@@ -101,9 +101,13 @@ export class FahrzeugeService {
   constructor(private http: HttpClient) {
   }
 
+  getMotorraeder(marke:string="honda"): Observable<Motorraeder> {
+    return this.http.get<Motorraeder>(`/motorcycleAPI/v1/motorcycles?make=${marke}`);
+  }
   getAutos(year: number): Observable<Auto> {
     return this.http.get<Auto>(`/carAPI/models?verbose=yes&year=${year}`);
   }
+
     getAttributes(year:number, make:string,  model:string): Observable<any> {
     return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}`);
   }

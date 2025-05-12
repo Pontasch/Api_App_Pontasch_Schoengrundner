@@ -9,4 +9,8 @@ export const routes: Routes = [
     path: 'auto',
     loadComponent: () => import('./auto/auto.page').then( m => m.AutoPage)
   },
+  {
+    path: 'motorrad',
+    loadComponent: () => import('./motorrad/motorrad/motorrad.page').then( m => m.MotorradPage)
+  },
 ];
