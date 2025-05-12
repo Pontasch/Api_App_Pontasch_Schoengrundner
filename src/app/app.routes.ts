@@ -11,6 +11,6 @@ export const routes: Routes = [
   },
   {
     path: 'motorrad',
-    loadComponent: () => import('./motorrad/motorrad/motorrad.page').then( m => m.MotorradPage)
+    loadComponent: () => import('./motorrad/motorrad.page').then( m => m.MotorradPage)
   },
 ];
