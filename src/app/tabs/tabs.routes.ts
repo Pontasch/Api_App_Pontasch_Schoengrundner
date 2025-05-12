@@ -16,11 +16,26 @@ export const routes: Routes = [
         redirectTo: '/tabs/auto',
         pathMatch: 'full',
       },
+      {
+        path: 'motorrad',
+        loadComponent: () =>
+          import('../motorrad/motorrad.page').then((m) => m.MotorradPage),
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/motorrad',
+        pathMatch: 'full',
+      },
     ],
   },
   {
     path: '',
     redirectTo: '/tabs/auto',
+    pathMatch: 'full',
+  },
+  {
+    path: '',
+    redirectTo: '/tabs/motorrad',
     pathMatch: 'full',
   },
 ];
