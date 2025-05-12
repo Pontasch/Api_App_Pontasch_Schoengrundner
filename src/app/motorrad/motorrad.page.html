@@ -7,8 +7,52 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">motorräder</ion-title>
+      <ion-title size="large">Motorräder</ion-title>
+
+
     </ion-toolbar>
+
   </ion-header>
-  <app-explore-container></app-explore-container>
+  <ion-grid class="search-grid">
+    <ion-row class="ion-align-items-center ion-justify-content-between">
+
+      <ion-col size="12" size-sm="5" size-md="3">
+        <ion-searchbar
+          [(ngModel)]="Marke"
+          placeholder="Marke"
+          (ionInput)="loadMotorraeder()"
+          debounce="0"
+          class="compact-search">
+        </ion-searchbar>
+      </ion-col>
+
+      <ion-col size="12" size-sm="5" size-md="3">
+        <ion-searchbar
+          [(ngModel)]="Model"
+          placeholder="Modell"
+          (ionInput)="loadMotorraeder()"
+          debounce="0"
+          class="compact-search">
+        </ion-searchbar>
+      </ion-col>
+
+      <ion-col size="12" size-sm="12" size-md="4" size-lg="3">
+        <ion-item lines="none" class="compact-item">
+          <ion-select
+            [(ngModel)]="selectedYear"
+            (ionChange)="loadMotorraeder()"
+            interface="popover"
+            placeholder="Jahr auswählen"
+            class="compact-select">
+            <ion-select-option *ngFor="let year of availableYears" [value]="year">
+              {{ year }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
+
