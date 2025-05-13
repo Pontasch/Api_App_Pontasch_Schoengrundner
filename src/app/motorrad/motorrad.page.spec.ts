@@ -1,17 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MotorradPage } from './motorrad.page';
+export interface Motorraeder {
+  data: Motorrad[];
+}
 
-describe('MotorradPage', () => {
-  let component: MotorradPage;
-  let fixture: ComponentFixture<MotorradPage>;
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(MotorradPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+export interface Motorrad {
+  make_model_trim: {
+    make_model: {
+      make: {
+        name: string;
+      };
+      name: string;
+    };
+  };
+  engine_type: string;
+  horsepower_hp: number;
+  transmission: string;
+}
