@@ -1,7 +1,7 @@
 <ion-header class="border-bottom">
   <ion-toolbar color="primary">
     <ion-title>
-      <ion-icon name="car-sport" class="ion-margin-end"></ion-icon>
+      <ion-icon name="car-sport-outline" class="ion-margin-end"></ion-icon>
       Fahrzeugdetails
     </ion-title>
     <ion-buttons slot="end">
@@ -32,7 +32,7 @@
 
             <ion-item>
               <ion-label><strong>Motor:</strong></ion-label>
-              <ion-text color="medium">{{ selectedAuto.engine_type }}</ion-text>
+              <ion-text color="medium">{{ selectedAuto.cylinders}} {{  selectedAuto.engine_type }}</ion-text>
             </ion-item>
 
             <ion-item>
@@ -71,13 +71,13 @@
       </ion-row>
     </ion-grid>
 
-    <ion-list *ngIf="selectedAuto.trims?.length" class="ion-margin-top">
+    <ion-list *ngIf="selectedAuto.trims" class="ion-margin-top">
       <ion-list-header>
         <ion-label>Ausstattungsvarianten</ion-label>
       </ion-list-header>
 
       <ion-item *ngFor="let trim of selectedAuto.trims">
-        <ion-label>{{ trim.name }}</ion-label>
+        <ion-label>{{ trim.description }}</ion-label>
         <ion-badge slot="end" color="secondary">
           {{ trim.msrp | currency:'EUR':'symbol' }}
         </ion-badge>
