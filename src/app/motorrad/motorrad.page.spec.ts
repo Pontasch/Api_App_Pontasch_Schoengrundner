@@ -15,3 +15,4 @@ export interface Motorrad {
   horsepower_hp: number;
   transmission: string;
 }
+
