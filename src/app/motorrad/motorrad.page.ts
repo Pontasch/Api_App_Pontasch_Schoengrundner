@@ -27,15 +27,27 @@ export class MotorradPage implements OnInit {
     this.loadMotorraeder();
   }
 
-  loadMotorraeder(): void {
+  async loadMotorraeder(): Promise<void> {
+
+    const cacheKey = `motorraeder${this.Marke}`;
+    const cachedMotorraeder = await this.fahrzeugeService.get(cacheKey);
+
+    if (cachedMotorraeder){
+      console.log('Daten aus dem Cache geladen.');
+      this.motorraeder = cachedMotorraeder;
+    } else {
+
     this.fahrzeugeService.getMotorraeder(this.Marke).subscribe(
-      (data) => {
+      async (data) => {
         this.motorraeder = data;
+        await this.fahrzeugeService.set(cacheKey, data);
+        console.log('Daten abgerufen und im Cache gespeichert. (Motorraeder)');
       },
       (error) => {
-        console.error('Fehler:', error);
+        console.error('Fehler beim Abruf:', error);
       }
     );
+  }
   }
 
   async openModal(motorrad: any) {

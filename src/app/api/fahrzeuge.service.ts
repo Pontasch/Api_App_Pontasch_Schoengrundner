@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {forkJoin, map, Observable} from "rxjs";
+import {Storage} from "@ionic/storage-angular";
+
 
 export interface Auto {
   collection: Collection;
@@ -16,6 +18,7 @@ export interface Collection {
 
 export interface AutoData {
   id: number;
+  cylinders:string;
   make_model_trim_id: number;
   engine_type: string;
   fuel_type: string;
@@ -47,7 +50,7 @@ export interface Trim {
   msrp: number;
   description: string;
 }
-export type Motorraeder= Motorrad[]
+export type Motorraeder = Motorrad[]
 
 export interface Motorrad{
   make: string
@@ -97,8 +100,21 @@ export interface Motorrad{
   providedIn: 'root'
 })
 export class FahrzeugeService {
+  private _storage: Storage | null = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private storage: Storage) {
+    this.init();
+  }
+
+  async init() {
+    this._storage = await this.storage.create();
+  }
+
+  public async  set(key: string, value: any) {
+    this._storage?.set(key, value);
+  }
+  public async get(key: string) {
+    return this._storage?.get(key);
   }
 
   getMotorraeder(marke:string="honda"): Observable<Motorraeder> {
@@ -108,7 +124,7 @@ export class FahrzeugeService {
     return this.http.get<Auto>(`/carAPI/models?verbose=yes&year=${year}`);
   }
 
-    getAttributes(year:number, make:string,  model:string): Observable<any> {
+  getAttributes(year:number, make:string,  model:string): Observable<any> {
     return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}`);
   }
 

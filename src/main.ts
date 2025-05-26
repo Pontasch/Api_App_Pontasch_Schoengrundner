@@ -6,6 +6,8 @@ import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import {provideHttpClient} from "@angular/common/http";
 import {ModalController} from "@ionic/angular";
+import {IonicStorageModule} from "@ionic/storage-angular";
+import {importProvidersFrom} from "@angular/core";
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -13,6 +15,7 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideHttpClient(),
-    ModalController
+    importProvidersFrom(ModalController),
+    importProvidersFrom(IonicStorageModule.forRoot())
   ],
 });
