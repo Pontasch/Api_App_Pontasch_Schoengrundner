@@ -53,6 +53,13 @@
 
     </ion-row>
   </ion-grid>
+  <ion-content *ngIf="this.HTTPError.bool">
+    <ion-text class="error">
+      <h1>Error: {{this.HTTPError.code}}</h1>
+      <h2>Fehler beim Laden der Daten</h2>
+      <p>{{ this.HTTPError.message }}</p>
+    </ion-text>
+  </ion-content>
 
 </ion-content>
 

@@ -17,6 +17,7 @@ export class MotorradPage implements OnInit {
   Model: string = '';
   selectedYear: number = 2020;
   availableYears: number[] = [2020, 2019, 2018, 2017, 2016, 2015];
+  HTTPError:{bool:boolean,message:string, code:number} = {bool: false, message: '', code:0}
 
   constructor(
     private fahrzeugeService: FahrzeugeService,
@@ -44,7 +45,10 @@ export class MotorradPage implements OnInit {
         console.log('Daten abgerufen und im Cache gespeichert. (Motorraeder)');
       },
       (error) => {
+        this.HTTPError.bool = true;
+        this.HTTPError.message = error.message;
         console.error('Fehler beim Abruf:', error);
+
       }
     );
   }

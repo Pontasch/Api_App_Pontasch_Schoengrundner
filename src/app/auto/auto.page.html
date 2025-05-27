@@ -1,13 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>auto</ion-title>
+    <ion-title>Autos</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">auto</ion-title>
+      <ion-title size="large">Autos</ion-title>
 
 
     </ion-toolbar>
@@ -53,7 +53,14 @@
 
     </ion-row>
   </ion-grid>
-  <ion-content *ngIf="this.autos">
+  <ion-content *ngIf="this.HTTPError.bool">
+    <ion-text class="error">
+      <h1>Error: {{this.HTTPError.code}}</h1>
+      <h2>Fehler beim Laden der Daten</h2>
+      <p>{{ this.HTTPError.message }}</p>
+    </ion-text>
+  </ion-content>
+  <ion-content *ngIf="this.autos ">
     <ion-list *ngIf="this.autos.data">
       <ion-item *ngFor="let auto of this.autos.data" (click)="openModal(auto)">
         <div>

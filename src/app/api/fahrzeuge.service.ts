@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {forkJoin, map, Observable} from "rxjs";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {catchError, forkJoin, map, Observable, retry, throwError} from "rxjs";
 import {Storage} from "@ionic/storage-angular";
 
 
@@ -117,16 +117,35 @@ export class FahrzeugeService {
     return this._storage?.get(key);
   }
 
-  getMotorraeder(marke:string="honda"): Observable<Motorraeder> {
-    return this.http.get<Motorraeder>(`/motorcycleAPI/v1/motorcycles?make=${marke}`);
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('An error occurred:', error.error);
+    } else {
+      console.error(
+        `Backend returned code ${error.status}, body was: `, error.error);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(() => new Error('Something bad happened; please try again later.'));
+  }
+
+  getMotorraeder(marke:string="honda"): Observable<Motorraeder>{
+    return this.http.get<Motorraeder>(`/motorcycleAPI/v1/motorcycles?make=${marke}`).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   getAttributes(year:number, make:string,  model:string, page:number): Observable<any> {
-    return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}&page=${page}`);
+    return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}&page=${page}`).pipe(
+      retry(3),
+      catchError(this.handleError));
   }
 
   getEngine(year:number, make:string,  model:string, page:number): Observable<Auto> {
-    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}&make=${make}&model=${model}&page=${page}`);
+    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}&make=${make}&model=${model}&page=${page}`).pipe(
+      retry(3),
+      catchError(this.handleError)
+    );
   }
 
   getAutosWithAttributesAndEngine(year: number, make: string, model: string, currentPage: number): Observable<Auto> {

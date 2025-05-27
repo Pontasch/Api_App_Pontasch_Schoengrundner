@@ -6,7 +6,7 @@ import {IonicModule, ModalController} from "@ionic/angular";
 import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.component";
 import {IonicStorageModule} from "@ionic/storage-angular";
 import {addIcons} from "ionicons";
-import {arrowBackSharp, arrowForwardSharp} from "ionicons/icons";
+import {arrowBackSharp, arrowForwardSharp, thermometerOutline} from "ionicons/icons";
 
 
 @Component({
@@ -26,12 +26,14 @@ export class AutoPage  implements OnInit {
     2020, 2019, 2018, 2017, 2016, 2015
   ];
 
+  HTTPError:{bool:boolean,message:string, code:number} = {bool: false, message: '', code:0}
 
 
   constructor(
     private fahrzeugeService: FahrzeugeService,
     private modalController: ModalController,
-    private changeRef: ChangeDetectorRef
+    private changeRef: ChangeDetectorRef,
+
   ) {
     addIcons({arrowForwardSharp, arrowBackSharp})
   }
@@ -57,7 +59,10 @@ export class AutoPage  implements OnInit {
           console.log('Daten abgerufen und im Cache gespeichert.(Autos)');
         },
         (error) => {
+          this.HTTPError.bool = true;
+          this.HTTPError.message = error.message;
           console.error('Fehler beim Abruf:', error);
+
         }
 
       );
@@ -88,4 +93,5 @@ export class AutoPage  implements OnInit {
     console.log(this.currentPage);
   }
 
+  protected readonly thermometerOutline = thermometerOutline;
 }
