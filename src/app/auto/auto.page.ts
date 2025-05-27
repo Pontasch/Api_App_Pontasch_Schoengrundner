@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {Auto, AutoData, FahrzeugeService} from "../api/fahrzeuge.service";
 import {IonicModule, ModalController} from "@ionic/angular";
 import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.component";
 import {IonicStorageModule} from "@ionic/storage-angular";
+import {addIcons} from "ionicons";
+import {arrowBackSharp, arrowForwardSharp} from "ionicons/icons";
 
 
 @Component({
@@ -12,10 +14,10 @@ import {IonicStorageModule} from "@ionic/storage-angular";
   templateUrl: './auto.page.html',
   styleUrls: ['./auto.page.scss'],
   standalone: true,
-  imports: [ CommonModule, FormsModule, IonicModule, IonicStorageModule]
+  imports: [ CommonModule, FormsModule, IonicModule, IonicStorageModule],
 })
 export class AutoPage  implements OnInit {
-  autos: Auto | undefined;
+  autos: Auto | undefined| null;
   Marke:string="";
   Model: string="";
   currentPage: number = 1;
@@ -29,8 +31,9 @@ export class AutoPage  implements OnInit {
   constructor(
     private fahrzeugeService: FahrzeugeService,
     private modalController: ModalController,
+    private changeRef: ChangeDetectorRef
   ) {
-
+    addIcons({arrowForwardSharp, arrowBackSharp})
   }
 
 
@@ -41,13 +44,13 @@ export class AutoPage  implements OnInit {
 
     const cacheKey = `autos_${this.selectedYear}_${this.Marke}_${this.Model}_${this.currentPage}`;
     const cachedAutos = await this.fahrzeugeService.get(cacheKey);
-    if (cachedAutos) {
+    if (await cachedAutos) {
       console.log('Daten aus dem Cache geladen.');
       this.autos = cachedAutos;
     } else {
 
 
-      this.fahrzeugeService.getAutosWithAttributesAndEngine(this.selectedYear, this.Marke, this.Model).subscribe(
+      this.fahrzeugeService.getAutosWithAttributesAndEngine(this.selectedYear, this.Marke, this.Model, this.currentPage).subscribe(
         async (data) => {
           this.autos = data;
           await this.fahrzeugeService.set(cacheKey, data);
@@ -59,6 +62,7 @@ export class AutoPage  implements OnInit {
 
       );
     }
+    this.changeRef.detectChanges();
   }
 
 
@@ -69,6 +73,19 @@ export class AutoPage  implements OnInit {
         selectedAuto: auto
       }
     });
+
     return modal.present();
   }
+
+  async nextPage() {
+    this.currentPage++;
+    await this.loadAutos();
+    console.log(this.currentPage);
+  }
+  async previousPage() {
+    this.currentPage--;
+    await this.loadAutos();
+    console.log(this.currentPage);
+  }
+
 }

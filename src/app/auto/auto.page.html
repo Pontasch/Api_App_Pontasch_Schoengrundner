@@ -53,9 +53,9 @@
 
     </ion-row>
   </ion-grid>
-  <ion-content *ngIf="autos">
-    <ion-list *ngIf="autos?.data">
-      <ion-item *ngFor="let auto of autos.data" (click)="openModal(auto)">
+  <ion-content *ngIf="this.autos">
+    <ion-list *ngIf="this.autos.data">
+      <ion-item *ngFor="let auto of this.autos.data" (click)="openModal(auto)">
         <div>
           <h2>{{ auto.make_model_trim.make_model.make.name }} - {{ auto.make_model_trim.make_model.name }}</h2>
           <p>Engine Type: {{ auto.engine_type }}</p>
@@ -66,3 +66,11 @@
     </ion-list>
   </ion-content>
 </ion-content>
+<div *ngIf="this.autos" style="display: grid; grid-auto-flow: column; grid-gap:0;">
+  <ion-button *ngIf="this.currentPage>1" expand="full" style="margin: 0; padding: 0; " color="secondary" (click)="previousPage()">
+    <ion-icon slot="icon-only" name="arrow-back-sharp" ></ion-icon>
+  </ion-button>
+  <ion-button *ngIf="this.currentPage<this.autos.collection.pages" expand="full" style="margin: 0; padding: 0; " color="secondary" (click)="nextPage()">
+    <ion-icon slot="icon-only" name="arrow-forward-sharp" ></ion-icon>
+  </ion-button>
+</div>
