@@ -43,7 +43,7 @@ export class AutoPage  implements OnInit {
       await this.loadAutos();
   }
   async loadAutos() {
-
+    await this.fahrzeugeService.ready(); // Storage initialisieren!
     const cacheKey = `autos_${this.selectedYear}_${this.Marke}_${this.Model}_${this.currentPage}`;
     const cachedAutos = await this.fahrzeugeService.get(cacheKey);
     if (await cachedAutos) {

@@ -110,6 +110,12 @@ export class FahrzeugeService {
     this._storage = await this.storage.create();
   }
 
+  async ready() {
+    if (!this._storage) {
+      await this.init();
+    }
+  }
+
   public async  set(key: string, value: any) {
     this._storage?.set(key, value);
   }
@@ -136,13 +142,13 @@ export class FahrzeugeService {
   }
 
   getAttributes(year:number, make:string,  model:string, page:number): Observable<any> {
-    return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}&page=${page}`).pipe(
+    return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}&page=${page}&limit=50`).pipe(
       retry(3),
       catchError(this.handleError));
   }
 
   getEngine(year:number, make:string,  model:string, page:number): Observable<Auto> {
-    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}&make=${make}&model=${model}&page=${page}`).pipe(
+    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}&make=${make}&model=${model}&page=${page}&limit=50`).pipe(
       retry(3),
       catchError(this.handleError)
     );
