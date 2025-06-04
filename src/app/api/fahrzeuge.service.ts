@@ -129,9 +129,11 @@ export class FahrzeugeService {
   }
 
   getMotorraeder(marke:string="honda"): Observable<Motorraeder>{
+    console.log("Hole Daten von der API!");
+    console.log("Marke:" + marke);
     return this.http.get<Motorraeder>(`/motorcycleAPI/v1/motorcycles?make=${marke}`).pipe(
       retry(3),
-      catchError(this.handleError)
+      //catchError(this.handleError)
     );
   }
 

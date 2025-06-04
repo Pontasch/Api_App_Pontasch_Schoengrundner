@@ -31,6 +31,9 @@ export class MotorradPage implements OnInit {
     this.fahrzeugeService.getMotorraeder(this.Marke).subscribe(
       (data) => {
         this.motorraeder = data;
+        //Anzeige der Daten von der API (Liste von Motorrädern) in der Browser-Console
+        console.log("Motorräder:"); //Dies muss mal funktionieren!!!!
+        console.log(this.motorraeder); //Dies muss mal funktionieren!!!!
       },
       (error) => {
         console.error('Fehler:', error);

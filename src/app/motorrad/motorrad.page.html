@@ -51,18 +51,18 @@
   </ion-grid>
 
 
-  <ion-list *ngIf="filteredMotorraeder?.length">
-    <ion-item *ngFor="let motorrad of filteredMotorraeder" (click)="openModal(motorrad)">
+  <ion-list *ngIf="motorraeder?.length">
+    <ion-item *ngFor="let motorrad of motorraeder" (click)="openModal(motorrad)">
       <div>
-        <h2>{{ motorrad.make_model_trim.make_model.make.name }} - {{ motorrad.make_model_trim.make_model.name }}</h2>
-        <p>Engine Type: {{ motorrad.engine_type }}</p>
-        <p>Horsepower: {{ motorrad.horsepower_hp }} HP</p>
-        <p>Transmission: {{ motorrad.transmission }}</p>
+<!--        <h2>{{ motorrad.make_model_trim.make_model.make.name }} - {{ motorrad.make_model_trim.make_model.name }}</h2>-->
+<!--        <p>Engine Type: {{ motorrad.engine_type }}</p>-->
+<!--        <p>Horsepower: {{ motorrad.horsepower_hp }} HP</p>-->
+<!--        <p>Transmission: {{ motorrad.transmission }}</p>-->
       </div>
     </ion-item>
   </ion-list>
 
-  <ion-note *ngIf="filteredMotorraeder && !filteredMotorraeder.length" class="ion-padding">
+  <ion-note *ngIf="motorraeder && !motorraeder.length" class="ion-padding">
     Keine Motorräder gefunden
   </ion-note>
 </ion-content>
