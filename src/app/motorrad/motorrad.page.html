@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>motorräder</ion-title>
+    <ion-title>Motorräder</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,20 +8,17 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Motorräder</ion-title>
-
-
     </ion-toolbar>
-
   </ion-header>
+
   <ion-grid class="search-grid">
     <ion-row class="ion-align-items-center ion-justify-content-between">
-
       <ion-col size="12" size-sm="5" size-md="3">
         <ion-searchbar
           [(ngModel)]="Marke"
           placeholder="Marke"
           (ionInput)="loadMotorraeder()"
-          debounce="0"
+          debounce="500"
           class="compact-search">
         </ion-searchbar>
       </ion-col>
@@ -31,7 +28,7 @@
           [(ngModel)]="Model"
           placeholder="Modell"
           (ionInput)="loadMotorraeder()"
-          debounce="0"
+          debounce="500"
           class="compact-search">
         </ion-searchbar>
       </ion-col>
@@ -50,16 +47,22 @@
           </ion-select>
         </ion-item>
       </ion-col>
-
     </ion-row>
   </ion-grid>
-  <ion-content *ngIf="this.HTTPError.bool">
-    <ion-text class="error">
-      <h1>Error: {{this.HTTPError.code}}</h1>
-      <h2>Fehler beim Laden der Daten</h2>
-      <p>{{ this.HTTPError.message }}</p>
-    </ion-text>
-  </ion-content>
 
+
+  <ion-list *ngIf="filteredMotorraeder?.length">
+    <ion-item *ngFor="let motorrad of filteredMotorraeder" (click)="openModal(motorrad)">
+      <div>
+        <h2>{{ motorrad.make_model_trim.make_model.make.name }} - {{ motorrad.make_model_trim.make_model.name }}</h2>
+        <p>Engine Type: {{ motorrad.engine_type }}</p>
+        <p>Horsepower: {{ motorrad.horsepower_hp }} HP</p>
+        <p>Transmission: {{ motorrad.transmission }}</p>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-note *ngIf="filteredMotorraeder && !filteredMotorraeder.length" class="ion-padding">
+    Keine Motorräder gefunden
+  </ion-note>
 </ion-content>
-

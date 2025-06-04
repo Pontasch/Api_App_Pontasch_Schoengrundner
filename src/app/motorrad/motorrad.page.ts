@@ -17,7 +17,6 @@ export class MotorradPage implements OnInit {
   Model: string = '';
   selectedYear: number = 2020;
   availableYears: number[] = [2020, 2019, 2018, 2017, 2016, 2015];
-  HTTPError:{bool:boolean,message:string, code:number} = {bool: false, message: '', code:0}
 
   constructor(
     private fahrzeugeService: FahrzeugeService,
@@ -28,30 +27,15 @@ export class MotorradPage implements OnInit {
     this.loadMotorraeder();
   }
 
-  async loadMotorraeder(): Promise<void> {
-
-    const cacheKey = `motorraeder${this.Marke}`;
-    const cachedMotorraeder = await this.fahrzeugeService.get(cacheKey);
-
-    if (cachedMotorraeder){
-      console.log('Daten aus dem Cache geladen.');
-      this.motorraeder = cachedMotorraeder;
-    } else {
-
+  loadMotorraeder(): void {
     this.fahrzeugeService.getMotorraeder(this.Marke).subscribe(
-      async (data) => {
+      (data) => {
         this.motorraeder = data;
-        await this.fahrzeugeService.set(cacheKey, data);
-        console.log('Daten abgerufen und im Cache gespeichert. (Motorraeder)');
       },
       (error) => {
-        this.HTTPError.bool = true;
-        this.HTTPError.message = error.message;
-        console.error('Fehler beim Abruf:', error);
-
+        console.error('Fehler:', error);
       }
     );
-  }
   }
 
   async openModal(motorrad: any) {
