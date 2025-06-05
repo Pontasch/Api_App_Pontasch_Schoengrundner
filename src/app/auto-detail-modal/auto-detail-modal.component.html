@@ -18,8 +18,8 @@
     <div class="ion-margin-bottom">
       <ion-text color="primary">
         <h1 class="ion-text-bold">
-          {{ selectedAuto.make_model_trim.name }}
-          <ion-text color="medium">({{ selectedAuto.make_model_trim.year }})</ion-text>
+          {{ selectedAuto.make }}
+          <ion-text color="medium">({{ selectedAuto.year }})</ion-text>
         </h1>
       </ion-text>
     </div>
@@ -55,34 +55,27 @@
               <ion-text color="medium">{{ selectedAuto.torque_ft_lbs }} ft-lbs</ion-text>
             </ion-item>
 
-            <ion-item>
-              <ion-label><strong>Getriebe:</strong></ion-label>
-              <ion-text color="medium">{{ selectedAuto.transmission }}</ion-text>
-            </ion-item>
 
             <ion-item>
               <ion-label><strong>Hersteller:</strong></ion-label>
               <ion-text color="medium">
-                {{ selectedAuto.make_model_trim.make_model.make.name }}
+                {{ selectedAuto.make }}
               </ion-text>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <ion-list *ngIf="selectedAuto.trims.length!==0" class="ion-margin-top">
       <ion-list-header>
-        <ion-label>Ausstattungsvarianten</ion-label>
+        <ion-label>Ausstattungsvariante</ion-label>
       </ion-list-header>
 
-      <ion-item *ngFor="let trim of selectedAuto.trims">
-        <ion-label>{{ trim.description }}</ion-label>
+      <ion-item>
+        <ion-label>{{ selectedAuto.trim_description }}</ion-label>
         <ion-badge slot="end" color="secondary">
-          {{ trim.msrp | currency:'EUR':'symbol' }}
+          {{ selectedAuto.msrp | currency:'EUR':'symbol' }}
         </ion-badge>
       </ion-item>
-    </ion-list>
 
   </div>
 </ion-content>

@@ -4,52 +4,74 @@ import {catchError, forkJoin, map, Observable, retry, throwError} from "rxjs";
 import {Storage} from "@ionic/storage-angular";
 
 
+
 export interface Auto {
-  collection: Collection;
-  data: AutoData[];
+  collection: Collection
+  data: AutoData[]
 }
 
 export interface Collection {
-  url: string;
-  count: number;
-  pages: number;
-  total: number;
+  url: string
+  count: number
+  pages: number
+  total: number
+  next: string
+  prev: string
+  first: string
+  last: string
 }
 
 export interface AutoData {
-  id: number;
-  cylinders:string;
-  make_model_trim_id: number;
-  engine_type: string;
-  fuel_type: string;
-  horsepower_hp: number;
-  torque_ft_lbs: number;
-  transmission: string;
-  make_model_trim: MakeModelTrim;
-  trims: Trim[];
-}
-
-export interface MakeModelTrim {
-  id: number;
-  name: string;
-  year: number;
-  make_model: MakeModel;
-}
-
-export interface MakeModel {
-  name: string;
-  make: Make;
-}
-
-export interface Make {
-  name: string;
+  id: number
+  make_id: number
+  model_id: number
+  submodel_id: number
+  trim_id: number
+  year: number
+  make: string
+  model: string
+  series: string
+  submodel: string
+  trim: string
+  trim_description: string
+  engine_type: string
+  fuel_type: string
+  cylinders: string
+  size: number
+  horsepower_hp: number
+  horsepower_rpm: number
+  torque_ft_lbs: number
+  torque_rpm: number
+  valves: number
+  valve_timing: string
+  cam_type: string
 }
 
 export interface Trim {
-  name: string;
-  msrp: number;
-  description: string;
+  collection: Collection
+  data: TrimData[]
 }
+
+
+export interface TrimData {
+  id: number
+  make_id: number
+  model_id: number
+  submodel_id: number
+  year: number
+  make: string
+  model: string
+  submodel: string
+  series: string
+  trim: string
+  description: string
+  msrp: number
+  invoice: number
+  created: string
+  modified: string
+}
+
+
 export type Motorraeder = Motorrad[]
 
 export interface Motorrad{
@@ -94,6 +116,11 @@ export interface Motorrad{
   total_width: any
   ignition: any
   dry_weight: string
+}
+
+export interface AutosWithAttributesAndEngineResult {
+  auto: Auto;
+  trim: Trim;
 }
 
 @Injectable({
@@ -141,43 +168,28 @@ export class FahrzeugeService {
     );
   }
 
-  getAttributes(year:number, make:string,  model:string, page:number): Observable<any> {
-    return this.http.get<any>(`/carAPI/trims?year=${year}&make=${make}&model=${model}&page=${page}&limit=50`).pipe(
+  getAttributes(year:number, make:string,  model:string, page:number): Observable<Trim> {
+    return this.http.get<Trim>(`/carAPI/trims/v2/?year=${year}&make=${make}&model=${model}&page=${page}&limit=50`).pipe(
       retry(3),
       catchError(this.handleError));
   }
 
   getEngine(year:number, make:string,  model:string, page:number): Observable<Auto> {
-    return this.http.get<Auto>(`/carAPI/engines?verbose=yes&year=${year}&make=${make}&model=${model}&page=${page}&limit=50`).pipe(
+    return this.http.get<Auto>(`/carAPI/engines/v2/?verbose=yes&year=${year}&make=${make}&model=${model}&page=${page}&limit=50`).pipe(
       retry(3),
       catchError(this.handleError)
     );
   }
 
-  getAutosWithAttributesAndEngine(year: number, make: string, model: string, currentPage: number): Observable<Auto> {
+  getAutosWithAttributesAndEngine(
+    year: number,
+    make: string,
+    model: string,
+    currentPage: number
+  ): Observable<AutosWithAttributesAndEngineResult> {
     return forkJoin({
-      trims: this.getAttributes(year, make,  model, currentPage),
-      engines: this.getEngine(year,make,model, currentPage)
-    }).pipe(
-      map(result => {
-        console.log('Trims:', result.trims.data);
-        console.log('Engines:', result.engines.data);
-
-        const modelsWithTrimsAndEngines = result.engines.data.map(engine => {
-
-          const modelTrims = result.trims.data.filter((trim: { make_model_id: number; }) => trim.make_model_id === engine.make_model_trim_id);
-
-          return {
-            ...engine,
-            trims: modelTrims
-          };
-        });
-
-        return {
-          ...result.engines,
-          data: modelsWithTrimsAndEngines
-        };
-      })
-    );
+      trim: this.getAttributes(year, make, model, currentPage),
+      auto: this.getEngine(year, make, model, currentPage)
+    });
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit,ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import {Auto, AutoData, FahrzeugeService} from "../api/fahrzeuge.service";
+import {Auto, AutoData, AutosWithAttributesAndEngineResult, FahrzeugeService} from "../api/fahrzeuge.service";
 import {IonicModule, ModalController} from "@ionic/angular";
 import {AutoDetailModalComponent} from "../auto-detail-modal/auto-detail-modal.component";
 import {IonicStorageModule} from "@ionic/storage-angular";
@@ -17,7 +17,7 @@ import {arrowBackSharp, arrowForwardSharp, thermometerOutline} from "ionicons/ic
   imports: [ CommonModule, FormsModule, IonicModule, IonicStorageModule],
 })
 export class AutoPage  implements OnInit {
-  autos: Auto | undefined| null;
+  autos: AutosWithAttributesAndEngineResult | undefined| null;
   Marke:string="";
   Model: string="";
   currentPage: number = 1;

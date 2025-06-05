@@ -61,13 +61,13 @@
     </ion-text>
   </ion-content>
   <ion-content *ngIf="this.autos ">
-    <ion-list *ngIf="this.autos.data">
-      <ion-item *ngFor="let auto of this.autos.data" (click)="openModal(auto)">
+    <ion-list *ngIf="this.autos.auto.data">
+      <ion-item *ngFor="let auto of this.autos.auto.data" (click)="openModal(auto)">
         <div>
-          <h2>{{ auto.make_model_trim.make_model.make.name }} - {{ auto.make_model_trim.make_model.name }}</h2>
+          <h2>{{ auto.make }} - {{ auto.model }}</h2>
           <p>Engine Type: {{ auto.engine_type }}</p>
           <p>Horsepower: {{ auto.horsepower_hp }} HP</p>
-          <p>Transmission: {{ auto.transmission }}</p>
+          <p>Cam Type: {{ auto.cam_type }}</p>
         </div>
       </ion-item>
     </ion-list>
@@ -77,7 +77,7 @@
   <ion-button *ngIf="this.currentPage>1" expand="full" style="margin: 0; padding: 0; " color="secondary" (click)="previousPage()">
     <ion-icon slot="icon-only" name="arrow-back-sharp" ></ion-icon>
   </ion-button>
-  <ion-button *ngIf="this.currentPage<this.autos.collection.pages" expand="full" style="margin: 0; padding: 0; " color="secondary" (click)="nextPage()">
+  <ion-button *ngIf="this.currentPage<this.autos.auto.collection.pages" expand="full" style="margin: 0; padding: 0; " color="secondary" (click)="nextPage()">
     <ion-icon slot="icon-only" name="arrow-forward-sharp" ></ion-icon>
   </ion-button>
 </div>

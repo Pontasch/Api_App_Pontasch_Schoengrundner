@@ -14,7 +14,7 @@ import {carSportOutline} from "ionicons/icons";
   imports: [CommonModule,IonicModule]
 })
 export class AutoDetailModalComponent {
-  @Input() selectedAuto: AutoData | undefined;
+  @Input() selectedAuto: any | undefined;
 
   constructor(private modalController: ModalController) {
     addIcons({ carSportOutline });
