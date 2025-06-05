@@ -1,11 +1,12 @@
-ion-select {
+ion-selion-select {
   max-width: 150px;
 }
 
-search-grid {
+.search-grid {
   padding: 0;
   --ion-grid-padding: 0;
   --ion-grid-column-padding: 5px;
+  margin-bottom: 16px;
 }
 
 .compact-search {
@@ -35,4 +36,10 @@ search-grid {
   ion-col {
     padding-bottom: 8px;
   }
+}
+
+ion-note {
+  display: block;
+  text-align: center;
+  color: var(--ion-color-medium);
 }
