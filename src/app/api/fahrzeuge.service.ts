@@ -73,7 +73,10 @@ export interface TrimData {
 
 
 export type Motorraeder = Motorrad[]
-
+export interface Motorreader {
+  collection: Collection
+  data: Motorrad[]
+}
 export interface Motorrad{
   make: string
   model: string
@@ -194,4 +197,6 @@ export class FahrzeugeService {
       auto: this.getEngine(year, make, model, currentPage)
     });
   }
+
+
 }
