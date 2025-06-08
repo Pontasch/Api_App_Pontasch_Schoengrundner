@@ -16,7 +16,7 @@ export class MotorradPage implements OnInit {
   Marke: string = '';
   Model: string = '';
   selectedYear: number = 2020;
-  availableYears: number[] = [2020, 2019, 2018, 2017, 2016, 2015];
+  availableYears: number[] = [2020, 2019, 2018, 2017, 2016, 2015];//jahres sortierung
 
   constructor(
     private fahrzeugeService: FahrzeugeService,
