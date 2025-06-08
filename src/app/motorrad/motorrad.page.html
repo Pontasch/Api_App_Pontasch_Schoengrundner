@@ -1,68 +1,50 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Motorräder</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-grid class="search-grid">
+  <ion-row class="ion-align-items-center ion-justify-content-between">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Motorräder</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <ion-col size="12" size-sm="5" size-md="3">
+      <ion-searchbar
+        [(ngModel)]="Marke"
+        placeholder="Marke"
+        (ionInput)="loadMotorraeder()"
+        debounce="0"
+        class="compact-search">
+      </ion-searchbar>
+    </ion-col>
 
-  <ion-grid class="search-grid">
-    <ion-row class="ion-align-items-center ion-justify-content-between">
-      <ion-col size="12" size-sm="5" size-md="3">
-        <ion-searchbar
-          [(ngModel)]="Marke"
-          placeholder="Marke"
-          (ionInput)="loadMotorraeder()"
-          debounce="500"
-          class="compact-search">
-        </ion-searchbar>
-      </ion-col>
+    <ion-col size="12" size-sm="5" size-md="3">
+      <ion-searchbar
+        [(ngModel)]="Model"
+        placeholder="Modell"
+        (ionInput)="loadMotorraeder()"
+        debounce="0"
+        class="compact-search">
+      </ion-searchbar>
+    </ion-col>
 
-      <ion-col size="12" size-sm="5" size-md="3">
-        <ion-searchbar
-          [(ngModel)]="Model"
-          placeholder="Modell"
-          (ionInput)="loadMotorraeder()"
-          debounce="500"
-          class="compact-search">
-        </ion-searchbar>
-      </ion-col>
+    <ion-col size="12" size-sm="12" size-md="4" size-lg="3">
+      <ion-item lines="none" class="compact-item">
+        <ion-select
+          [(ngModel)]="selectedYear"
+          (ionChange)="loadMotorraeder()"
+          interface="popover"
+          placeholder="Jahr auswählen"
+          class="compact-select">
+          <ion-select-option *ngFor="let year of availableYears" [value]="year">
+            {{ year }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
-      <ion-col size="12" size-sm="12" size-md="4" size-lg="3">
-        <ion-item lines="none" class="compact-item">
-          <ion-select
-            [(ngModel)]="selectedYear"
-            (ionChange)="loadMotorraeder()"
-            interface="popover"
-            placeholder="Jahr auswählen"
-            class="compact-select">
-            <ion-select-option *ngFor="let year of availableYears" [value]="year">
-              {{ year }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-
-  <ion-list *ngIf="motorraeder?.length">
-    <ion-item *ngFor="let motorrad of motorraeder" (click)="openModal(motorrad)">
-      <div>
-<!--        <h2>{{ motorrad.make_model_trim.make_model.make.name }} - {{ motorrad.make_model_trim.make_model.name }}</h2>-->
-<!--        <p>Engine Type: {{ motorrad.engine_type }}</p>-->
-<!--        <p>Horsepower: {{ motorrad.horsepower_hp }} HP</p>-->
-<!--        <p>Transmission: {{ motorrad.transmission }}</p>-->
-      </div>
-    </ion-item>
-  </ion-list>
-
-  <ion-note *ngIf="motorraeder && !motorraeder.length" class="ion-padding">
-    Keine Motorräder gefunden
-  </ion-note>
-</ion-content>
+<ion-list *ngIf="motorraeder?.data">
+  <ion-item *ngFor="let motorrad of motorraeder.data" (click)="openModal(motorrad)">
+    <div>
+      <h2>{{ motorrad.make_model_trim.make_model.make.name }} - {{ motorrad.make_model_trim.make_model.name }}</h2>
+      <p>Engine Type: {{ motorrad.engine_type }}</p>
+      <p>Horsepower: {{ motorrad.horsepower_hp }} HP</p>
+      <p>Transmission: {{ motorrad.transmission }}</p>
+    </div>
+  </ion-item>
+</ion-list>
