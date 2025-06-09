@@ -1,5 +1,10 @@
-export interface Motorrad {
+export interface Motorraeder {
+  data: Motorrad[];
+  status?: number;
+  message?: string;
+}
 
+export interface Motorrad {
   make_model_trim: {
     make_model: {
       make: {
@@ -7,11 +12,9 @@ export interface Motorrad {
       };
       name: string;
     };
-    name?: string;
   };
-  engine_type?: string;
-  horsepower_hp?: number;
-  transmission?: string;
-  year?: number;
-
+  engine_type: string;
+  horsepower_hp: number;
+  transmission: string;
+  year: number;
 }
