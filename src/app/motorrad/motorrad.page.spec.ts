@@ -1,7 +1,6 @@
 export interface Motorraeder {
   data: Motorrad[];
-  status?: number;
-  message?: string;
+  total: number;
 }
 
 export interface Motorrad {

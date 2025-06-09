@@ -12,7 +12,8 @@ import { IonicModule, ModalController } from '@ionic/angular';
   imports: [CommonModule, FormsModule, IonicModule]
 })
 export class MotorradPage implements OnInit {
-  motorraeder: Motorraeder = { data: [] };
+  motorraeder: Motorraeder = { data: [], total: 0 };
+  displayedMotorraeder: any[] = [];
   Marke: string = '';
   Model: string = '';
   selectedYear: number = 2020;
@@ -28,6 +29,11 @@ export class MotorradPage implements OnInit {
     { value: 'jahr-desc', label: 'Jahr (alt-neu)' }
   ];
 
+  // Paginierung
+  currentPage: number = 1;
+  itemsPerPage: number = 10; // APP-10
+  totalPages: number = 1;
+
   constructor(
     private fahrzeugeService: FahrzeugeService,
     private modalController: ModalController
@@ -42,12 +48,19 @@ export class MotorradPage implements OnInit {
       .subscribe({
         next: (data: Motorraeder) => {
           this.motorraeder = data;
+          this.totalPages = Math.ceil(this.motorraeder.data.length / this.itemsPerPage);
           this.sortMotorraeder();
-          console.log('Daten geladen:', this.motorraeder);
+          this.updateDisplayedMotorraeder();
+          console.log('Daten geladen:', {
+            total: this.motorraeder.data.length,
+            currentPage: this.currentPage,
+            itemsPerPage: this.itemsPerPage
+          });
         },
         error: (error) => {
-          console.error('Fehler beim Laden:', error);
-          this.motorraeder = { data: [] };
+          console.error('Fehler:', error);
+          this.motorraeder = { data: [], total: 0 };
+          this.displayedMotorraeder = [];
         }
       });
   }
@@ -79,14 +92,27 @@ export class MotorradPage implements OnInit {
         this.motorraeder.data.sort((a, b) => (b.year || 0) - (a.year || 0));
         break;
     }
+    this.updateDisplayedMotorraeder();
+  }
+
+  updateDisplayedMotorraeder(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedMotorraeder = this.motorraeder.data.slice(startIndex, endIndex);
+  }
+
+  changePage(newPage: number): void {
+    if (newPage < 1 || newPage > this.totalPages) return;
+    this.currentPage = newPage;
+    this.updateDisplayedMotorraeder();
   }
 
   onSortChange(): void {
+    this.currentPage = 1;
     this.sortMotorraeder();
   }
 
   async openModal(motorrad: any) {
-    console.log('Motorrad ausgewählt:', motorrad);
     const modal = await this.modalController.create({
       component: MotorradPage,
       componentProps: {

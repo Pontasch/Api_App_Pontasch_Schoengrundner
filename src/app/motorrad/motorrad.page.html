@@ -66,8 +66,8 @@
     </ion-row>
   </ion-grid>
 
-  <ion-list *ngIf="motorraeder.data && motorraeder.data.length > 0">
-    <ion-item *ngFor="let motorrad of motorraeder.data" (click)="openModal(motorrad)">
+  <ion-list *ngIf="displayedMotorraeder.length > 0">
+    <ion-item *ngFor="let motorrad of displayedMotorraeder" (click)="openModal(motorrad)">
       <div>
         <h2>{{ motorrad.make_model_trim?.make_model?.make?.name }} - {{ motorrad.make_model_trim?.make_model?.name }}</h2>
         <p>Baujahr: {{ motorrad.year }}</p>
@@ -81,4 +81,41 @@
   <ion-note *ngIf="motorraeder.data && motorraeder.data.length === 0" class="ion-padding">
     Keine Motorräder gefunden
   </ion-note>
+
+  <!-- Paginierung -->
+  <ion-grid *ngIf="motorraeder.data && motorraeder.data.length > 0" class="pagination-grid">
+    <ion-row class="ion-justify-content-center ion-align-items-center">
+      <ion-col size="auto">
+        <ion-button
+          (click)="changePage(currentPage - 1)"
+          [disabled]="currentPage === 1"
+          size="small">
+          Zurück
+        </ion-button>
+      </ion-col>
+
+      <ion-col size="auto">
+        <ion-text>
+          Seite {{currentPage}} von {{totalPages}} (APP-{{itemsPerPage}})
+        </ion-text>
+      </ion-col>
+
+      <ion-col size="auto">
+        <ion-button
+          (click)="changePage(currentPage + 1)"
+          [disabled]="currentPage === totalPages"
+          size="small">
+          Weiter
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-note>
+          Zeige {{displayedMotorraeder.length}} von {{motorraeder.data.length}} Motorrädern
+        </ion-note>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
