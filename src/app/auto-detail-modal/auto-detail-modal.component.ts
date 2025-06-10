@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import {IonicModule, ModalController} from '@ionic/angular';
 import {CommonModule} from "@angular/common";
 
-import {AutoData} from "../api/fahrzeuge.service";
 import {addIcons} from "ionicons";
 import {carSportOutline} from "ionicons/icons";
+import {AutoData} from "../api/fahrzeuge.service";
 
 @Component({
   selector: 'app-auto-detail-modal',
@@ -14,7 +14,7 @@ import {carSportOutline} from "ionicons/icons";
   imports: [CommonModule,IonicModule]
 })
 export class AutoDetailModalComponent {
-  @Input() selectedAuto: any | undefined;
+  @Input() selectedAuto: AutoData | undefined;
 
   constructor(private modalController: ModalController) {
     addIcons({ carSportOutline });
@@ -24,3 +24,4 @@ export class AutoDetailModalComponent {
     this.modalController.dismiss().then(r => r);
   }
 }
+

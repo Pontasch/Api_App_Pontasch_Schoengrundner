@@ -64,7 +64,10 @@
     <ion-list *ngIf="this.autos.auto.data">
       <ion-item *ngFor="let auto of this.autos.auto.data" (click)="openModal(auto)">
         <div>
-          <h2>{{ auto.make }} - {{ auto.model }}</h2>
+          <h2>
+            {{ auto.make }} - {{ auto.model }}
+            <ion-icon name="pricetag" color="success" style="margin-left: 8px;"></ion-icon>
+          </h2>
           <p>Engine Type: {{ auto.engine_type }}</p>
           <p>Horsepower: {{ auto.horsepower_hp }} HP</p>
           <p>Cam Type: {{ auto.cam_type }}</p>

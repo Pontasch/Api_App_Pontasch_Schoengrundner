@@ -12,7 +12,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
   imports: [CommonModule, FormsModule, IonicModule]
 })
 export class MotorradPage implements OnInit {
-  motorraeder: Motorraeder = { data: [], total: 0 };
+
   displayedMotorraeder: any[] = [];
   Marke: string = '';
   Model: string = '';
@@ -33,10 +33,16 @@ export class MotorradPage implements OnInit {
   currentPage: number = 1;
   itemsPerPage: number = 10; // APP-10
   totalPages: number = 1;
+  motorraeder: Motorraeder = {
+    collection: {
+      url: '', count: 0, pages: 0, total: 0, next: '', prev: '', first: '', last: ''
+    },
+    data: []
+  };
 
   constructor(
     private fahrzeugeService: FahrzeugeService,
-    private modalController: ModalController
+    private modalController: ModalController,
   ) {}
 
   ngOnInit(): void {
@@ -51,15 +57,14 @@ export class MotorradPage implements OnInit {
           this.totalPages = Math.ceil(this.motorraeder.data.length / this.itemsPerPage);
           this.sortMotorraeder();
           this.updateDisplayedMotorraeder();
-          console.log('Daten geladen:', {
-            total: this.motorraeder.data.length,
-            currentPage: this.currentPage,
-            itemsPerPage: this.itemsPerPage
-          });
         },
         error: (error) => {
-          console.error('Fehler:', error);
-          this.motorraeder = { data: [], total: 0 };
+          this.motorraeder = {
+            collection: {
+              url: '', count: 0, pages: 0, total: 0, next: '', prev: '', first: '', last: ''
+            },
+            data: []
+          };
           this.displayedMotorraeder = [];
         }
       });
@@ -71,25 +76,33 @@ export class MotorradPage implements OnInit {
     switch (this.sortOption) {
       case 'marke':
         this.motorraeder.data.sort((a, b) =>
-          a.make_model_trim.make_model.make.name.localeCompare(b.make_model_trim.make_model.make.name));
+          a.make.localeCompare(b.make)
+        );
         break;
       case 'marke-desc':
         this.motorraeder.data.sort((a, b) =>
-          b.make_model_trim.make_model.make.name.localeCompare(a.make_model_trim.make_model.make.name));
+          b.make.localeCompare(a.make)
+        );
         break;
       case 'modell':
         this.motorraeder.data.sort((a, b) =>
-          a.make_model_trim.make_model.name.localeCompare(b.make_model_trim.make_model.name));
+          a.model.localeCompare(b.model)
+        );
         break;
       case 'modell-desc':
         this.motorraeder.data.sort((a, b) =>
-          b.make_model_trim.make_model.name.localeCompare(a.make_model_trim.make_model.name));
+          b.model.localeCompare(a.model)
+        );
         break;
       case 'jahr':
-        this.motorraeder.data.sort((a, b) => (a.year || 0) - (b.year || 0));
+        this.motorraeder.data.sort((a, b) =>
+          (parseInt(a.year) || 0) - (parseInt(b.year) || 0)
+        );
         break;
       case 'jahr-desc':
-        this.motorraeder.data.sort((a, b) => (b.year || 0) - (a.year || 0));
+        this.motorraeder.data.sort((a, b) =>
+          (parseInt(b.year) || 0) - (parseInt(a.year) || 0)
+        );
         break;
     }
     this.updateDisplayedMotorraeder();

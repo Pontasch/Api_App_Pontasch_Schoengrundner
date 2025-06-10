@@ -1,12 +1,16 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
-    <ion-tab-button tab="auto" href="/tabs/auto">
+    <ion-tab-button tab="auto" [routerLink]="['/tabs/auto']">
       <ion-icon aria-hidden="true" name="car-sport-sharp"></ion-icon>
       <ion-label>Tab 1</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="motorrad" href="/tabs/motorrad">
+    <ion-tab-button tab="motorrad" [routerLink]="['/tabs/motorrad']">
       <ion-icon aria-hidden="true" name="bicycle-sharp"></ion-icon>
       <ion-label>Tab 2</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="darkmode" (click)="toggleDarkMode()" class="darkmode-tab">
+      <ion-icon [name]="isDark ? 'sunny' : 'moon'"></ion-icon>
+      <ion-label>{{ isDark ? 'Light' : 'Dark' }}</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
