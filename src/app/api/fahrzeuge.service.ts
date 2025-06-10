@@ -72,11 +72,12 @@ export interface TrimData {
 }
 
 
-export type Motorraeder = Motorrad[]
-export interface Motorreader {
-  collection: Collection
-  data: Motorrad[]
+
+export interface Motorraeder {
+  collection: Collection;
+  data: Motorrad[];
 }
+
 export interface Motorrad{
   make: string
   model: string
@@ -164,11 +165,21 @@ export class FahrzeugeService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
-  getMotorraeder(marke:string="honda"): Observable<Motorraeder>{
-    console.log("Hole Daten von der API!");
-    console.log("Marke:" + marke);
-    return this.http.get<Motorraeder>(`/motorcycleAPI/v1/motorcycles?make=${marke}`).pipe(
+  getMotorraeder(marke: string = '', modell: string = '', jahr: number | string = ''): Observable<Motorraeder> {
+    let url = `/motorcycleAPI/v1/motorcycles?`;
+    if (marke) url += `make=${encodeURIComponent(marke)}&`;
+    if (modell) url += `model=${encodeURIComponent(modell)}&`;
+    if (jahr) url += `year=${jahr}&`;
+    url = url.replace(/[&?]$/, '');
+    return this.http.get<any>(url).pipe(
       retry(3),
+      map((apiResult: any) => {
+        // Erwartet: { collection: ..., data: [...] }
+        return {
+          collection: apiResult.collection || {},
+          data: apiResult.data || []
+        };
+      })
       //catchError(this.handleError)
     );
   }

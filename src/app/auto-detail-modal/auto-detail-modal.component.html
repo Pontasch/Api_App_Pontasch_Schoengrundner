@@ -18,7 +18,7 @@
     <div class="ion-margin-bottom">
       <ion-text color="primary">
         <h1 class="ion-text-bold">
-          {{ selectedAuto.make }}
+          {{ selectedAuto.make }} - {{ selectedAuto.model }}
           <ion-text color="medium">({{ selectedAuto.year }})</ion-text>
         </h1>
       </ion-text>
@@ -26,56 +26,86 @@
 
     <ion-grid>
       <ion-row>
-
         <ion-col size="12" size-md="6">
           <ion-list lines="none">
-
             <ion-item>
-              <ion-label><strong>Motor:</strong></ion-label>
-              <ion-text color="medium">{{ selectedAuto.cylinders}} {{  selectedAuto.engine_type }}</ion-text>
+              <ion-label><strong>Motor</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.cylinders }} {{ selectedAuto.engine_type }}</ion-text>
             </ion-item>
-
             <ion-item>
-              <ion-label><strong>Kraftstoff:</strong></ion-label>
+              <ion-label><strong>Kraftstoff</strong></ion-label>
               <ion-text color="medium">{{ selectedAuto.fuel_type }}</ion-text>
             </ion-item>
-
             <ion-item>
-              <ion-label><strong>Leistung:</strong></ion-label>
+              <ion-label><strong>Leistung</strong></ion-label>
               <ion-text color="medium">{{ selectedAuto.horsepower_hp }} HP</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Serie</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.series }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Submodell</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.submodel }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Hubraum</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.size }} cm³</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Leistung (U/min)</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.horsepower_rpm }}</ion-text>
             </ion-item>
           </ion-list>
         </ion-col>
-
         <ion-col size="12" size-md="6">
           <ion-list lines="none">
-
             <ion-item>
-              <ion-label><strong>Drehmoment:</strong></ion-label>
+              <ion-label><strong>Drehmoment</strong></ion-label>
               <ion-text color="medium">{{ selectedAuto.torque_ft_lbs }} ft-lbs</ion-text>
             </ion-item>
-
-
             <ion-item>
-              <ion-label><strong>Hersteller:</strong></ion-label>
-              <ion-text color="medium">
-                {{ selectedAuto.make }}
-              </ion-text>
+              <ion-label><strong>Hersteller</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.make }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Drehmoment (U/min)</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.torque_rpm }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Ventile</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.valves }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Ventilsteuerung</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.valve_timing }}</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-label><strong>Nockenwellentyp</strong></ion-label>
+              <ion-text color="medium">{{ selectedAuto.cam_type }}</ion-text>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
     </ion-grid>
-      <ion-list-header>
-        <ion-label>Ausstattungsvariante</ion-label>
-      </ion-list-header>
 
-      <ion-item>
-        <ion-label>{{ selectedAuto.trim_description }}</ion-label>
-        <ion-badge slot="end" color="secondary">
-          {{ selectedAuto.msrp | currency:'EUR':'symbol' }}
-        </ion-badge>
-      </ion-item>
+    <ion-row>
+      <ion-col size="12">
+        <ion-item lines="none">
+          <ion-label><strong>Verkaufspreis</strong></ion-label>
+          <ion-label slot="end">Auf Anfrage!</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-list-header class="ion-margin-top">
+      <ion-label>Ausstattungsvariante</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-label>{{ selectedAuto.trim_description }}</ion-label>
+    </ion-item>
 
   </div>
 </ion-content>
+
+

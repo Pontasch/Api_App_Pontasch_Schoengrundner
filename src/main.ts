@@ -7,6 +7,7 @@ import {provideHttpClient} from "@angular/common/http";
 import {ModalController} from "@ionic/angular";
 import {IonicStorageModule} from "@ionic/storage-angular";
 import {importProvidersFrom} from "@angular/core";
+import {Drivers} from "@ionic/storage";
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -16,6 +17,7 @@ bootstrapApplication(AppComponent, {
     importProvidersFrom(IonicStorageModule.forRoot(
       {
         name: 'Fahrzeuge',
+        driverOrder: [Drivers.LocalStorage, Drivers.IndexedDB]
       }
     )),
     provideHttpClient(),

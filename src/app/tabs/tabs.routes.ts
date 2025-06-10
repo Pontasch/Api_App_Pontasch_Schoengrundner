@@ -12,18 +12,13 @@ export const routes: Routes = [
           import('../auto/auto.page').then((m) => m.AutoPage),
       },
       {
-        path: '',
-        redirectTo: '/tabs/auto',
-        pathMatch: 'full',
-      },
-      {
         path: 'motorrad',
         loadComponent: () =>
           import('../motorrad/motorrad.page').then((m) => m.MotorradPage),
       },
       {
         path: '',
-        redirectTo: '/tabs/motorrad',
+        redirectTo: 'auto',
         pathMatch: 'full',
       },
     ],
@@ -31,11 +26,6 @@ export const routes: Routes = [
   {
     path: '',
     redirectTo: '/tabs/auto',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
-    redirectTo: '/tabs/motorrad',
     pathMatch: 'full',
   },
 ];
